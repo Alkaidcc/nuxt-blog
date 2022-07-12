@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { store } from '@/store'
 import { useDark, useToggle } from '@vueuse/core';
 import IconLightMode from "~icons/feather/sun"
 import IconDarkMode from "~icons/feather/moon"
@@ -11,14 +12,51 @@ const navBlobClass = computed(() => {
     case "index":
       return "bg-yellow-200 dark:bg-yellow-500 left-2"
     case "about":
-      return "bg-purple-200 dark:bg-purple-500  left-18  md:left-22"
+      return "bg-red-300 dark:bg-red-500  left-50  md:left-62"
     case "project":
       return "bg-blue-200 dark:bg-blue-500  left-34  md:left-42"
     case "blog":
     case "blog-slug":
-      return "bg-red-300 dark:bg-red-500  left-50  md:left-62"
+      return "bg-purple-200 dark:bg-purple-500  left-18  md:left-22"
   }
 })
+
+const blob1Class = computed(() => {
+  if (store.loading) return "left-1/4 md:left-1/3 top-1/3 md:top-1/3"
+  switch (route.name) {
+    case "index":
+      return "top-1/6 left-1/20"
+    case "about":
+      return "top-1/10 left-0"
+    default:
+      return "top-1/10 -left-1/10"
+  }
+})
+const blob2Class = computed(() => {
+  if (store.loading) return "left-1/3 top-1/3  !opacity-0"
+  switch (route.name) {
+    case "index":
+      return "top-1/2 left-1/3"
+    case "about":
+      return "top-2/5 left-1/3"
+    default:
+      return "top-1/2 left-1/3"
+  }
+})
+const blob3Class = computed(() => {
+  if (store.loading) return "bottom-1/4 right-1/4 !opacity-0"
+  switch (route.name) {
+    case "index":
+      return "bottom-1/5 right-1/20"
+    case "about":
+      return "bottom-1/20 -right-1/20 dark:bottom-2/5 dark:-right-1/20"
+    case "project":
+      return "bottom-1/5 -right-1/5"
+    default:
+      return "bottom-1/20 -right-1/20"
+  }
+})
+
 </script>
 <template>
   <div
@@ -40,8 +78,19 @@ const navBlobClass = computed(() => {
           </transition>
         </button>
       </div>
+      <NuxtPage class="z-10" />
 
-
+      <Footer class="z-10" />
+      <div class="z-0 fixed top-0 transform left-1/2 -translate-x-1/2 max-w-screen-lg w-full h-full">
+        <Blob :class="blob1Class"
+          class="bg-yellow-200 dark:bg-yellow-500 animate-blob animate-ease-[cubic-bezier(0.25,0.1,0.25,1)]"></Blob>
+        <Blob :class="blob2Class"
+          class="bg-purple-200 dark:bg-purple-700 animate-blob animate-ease-[cubic-bezier(0.25,0.1,0.25,1)] animate-delay-1000">
+        </Blob>
+        <Blob :class="blob3Class"
+          class="bg-blue-300 dark:bg-blue-700 animate-blob animate-ease-[cubic-bezier(0.25,0.1,0.25,1)] animate-delay-3000">
+        </Blob>
+      </div>
     </div>
   </div>
 </template>
