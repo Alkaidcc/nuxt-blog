@@ -5,5 +5,6 @@ export default defineNuxtConfig({
   typescript: {
     shim: false
   },
-  modules: ['nuxt-windicss','unplugin-icons/nuxt'],
+  modules: ['nuxt-windicss', 'unplugin-icons/nuxt'],
+  css: ['@/assets/styles.css'],
 })
